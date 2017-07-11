@@ -22,8 +22,10 @@ def print_table(name,id_,network,gateway,ip_address,network_id,endpoint_id,heade
 #'IPAMConfig', 'IPv6Gateway', 'GlobalIPv6PrefixLen', 'IPAddress', 'GlobalIPv6Address', 'NetworkID', 'Links', 'EndpointID', 'Gateway', 'IPPrefixLen', 'Aliases', 'MacAddress'
 
 print_table("Alias","Container Id","Network Name","Gateway","IP Address","Network ID","Endpoint ID",header=True)
-
+count = 0
+last = False
 for key in sorted(data.keys()):
+    count += 1
     network, values = data[key][0]["NetworkSettings"]["Networks"].popitem()
     for i in values['Aliases']:
         try:
@@ -31,5 +33,5 @@ for key in sorted(data.keys()):
             id = i
         except ValueError:
             name = i
-
     print_table(name,id,network,values['Gateway'],values['IPAddress'],values['NetworkID'],values['EndpointID'])
+print('-'*238)
